@@ -139,11 +139,11 @@ export class ShowQuickCommitCommand extends ActiveEditorCachedCommand {
 			}
 
 			if (args.revealInView) {
-				void (await reveal(args.commit, {
+				await reveal(args.commit, {
 					select: true,
 					focus: true,
 					expand: true,
-				}));
+				});
 
 				return;
 			}

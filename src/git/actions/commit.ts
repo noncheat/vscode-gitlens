@@ -551,19 +551,27 @@ export async function reveal(
 		expand?: boolean | number;
 	},
 ) {
-	const views = [Container.instance.commitsView, Container.instance.branchesView, Container.instance.remotesView];
+	await Container.instance.searchAndCompareView.search(
+		commit.repoPath,
+		{ query: commit.ref },
+		{
+			label: { label: `for ${commit.ref}` },
+			reveal: options,
+		},
+	);
+	// const views = [Container.instance.commitsView, Container.instance.branchesView, Container.instance.remotesView];
 
-	// TODO@eamodio stop duplicate notifications
+	// // TODO@eamodio stop duplicate notifications
 
-	for (const view of views) {
-		const node = view.canReveal
-			? await view.revealCommit(commit, options)
-			: await Container.instance.repositoriesView.revealCommit(commit, options);
-		if (node != null) return node;
-	}
+	// for (const view of views) {
+	// 	const node = view.canReveal
+	// 		? await view.revealCommit(commit, options)
+	// 		: await Container.instance.repositoriesView.revealCommit(commit, options);
+	// 	if (node != null) return node;
+	// }
 
-	void views[0].show({ preserveFocus: !options?.focus });
-	return undefined;
+	// void views[0].show({ preserveFocus: !options?.focus });
+	// return undefined;
 }
 
 export async function showDetailsQuickPick(commit: GitCommit, uri?: Uri): Promise<void>;
